@@ -148,19 +148,6 @@ volume_db = -3.002
 stream = ExtResource("10_jtnpw")
 volume_db = -3.159
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(720, 1216)
-rotation = -0.31765
-
-[node name="Label" type="Label" parent="Node2D"]
-offset_left = -137.056
-offset_top = -31.3771
-offset_right = 66.9435
-offset_bottom = 18.6229
-theme_override_font_sizes/font_size = 34
-text = "V1.0 RC!"
-metadata/_edit_use_anchors_ = true
-
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(360, 640)
 

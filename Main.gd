@@ -91,6 +91,9 @@ func hit():
 		var emojies = get_tree().get_nodes_in_group("emoji")
 		for i in emojies:
 			i.queue_free()
+		var toilets = get_tree().get_nodes_in_group("toilet")
+		for i in toilets:
+			i.queue_free()
 		var time_now = Time.get_unix_time_from_system()
 		var time_elapsed = time_now - time_start
 		if (points > daily_best_score):
