@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://blalxpf3vac1d"]
+
+[ext_resource type="Script" path="res://Toilet.gd" id="1_dy3d2"]
+[ext_resource type="Texture2D" uid="uid://yu5kocc7s61j" path="res://Assets/toilet.png" id="2_n1uam"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3pys"]
+radius = 32.0
+height = 64.0
+
+[node name="Toilet" type="RigidBody2D"]
+collision_layer = 2
+gravity_scale = 0.0
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_dy3d2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_n1uam")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_p3pys")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

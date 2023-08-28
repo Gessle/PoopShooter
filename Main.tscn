@@ -1,0 +1,175 @@
+[gd_scene load_steps=18 format=3 uid="uid://ddrih0hrolkd6"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_nsmpv"]
+[ext_resource type="PackedScene" uid="uid://dwykx8nmoxx3r" path="res://Emoji.tscn" id="2_y6x6o"]
+[ext_resource type="PackedScene" uid="uid://blalxpf3vac1d" path="res://Toilet.tscn" id="3_oqb3r"]
+[ext_resource type="PackedScene" uid="uid://cdl101ryu16f7" path="res://Home.tscn" id="3_wha44"]
+[ext_resource type="PackedScene" uid="uid://g0wau0a3hw56" path="res://Explosion.tscn" id="4_npa8b"]
+[ext_resource type="Texture2D" uid="uid://cx3ax75ucnril" path="res://Assets/starayes.png" id="6_6lf71"]
+[ext_resource type="Texture2D" uid="uid://dqnugq6ton038" path="res://Assets/clock.png" id="6_uacof"]
+[ext_resource type="AudioStream" uid="uid://driqjgltjt254" path="res://Assets/toilet-flushing.mp3" id="6_uegb0"]
+[ext_resource type="AudioStream" uid="uid://dnsgtw4xedigl" path="res://Assets/fart.mp3" id="7_acm8h"]
+[ext_resource type="Texture2D" uid="uid://bk6gxgc2jajwj" path="res://Assets/paper.png" id="8_umojq"]
+[ext_resource type="AudioStream" uid="uid://ropgxp0ky4j0" path="res://Assets/blob.mp3" id="10_jtnpw"]
+[ext_resource type="PackedScene" uid="uid://cgylu3oaxuh3b" path="res://Menu.tscn" id="12_tt8pg"]
+
+[sub_resource type="Gradient" id="Gradient_cfmxu"]
+colors = PackedColorArray(0.217406, 0.359374, 0.352775, 1, 8.42288e-08, 0.0673127, 0.112653, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_weuim"]
+gradient = SubResource("Gradient_cfmxu")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_glp6g"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 720, 64, 0, 0, 0, 0, 720, 1280, 0, 0, 0, 0, 0, 1280, 0, 0, 0, 0, 0, 64)
+}
+point_count = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3iqg"]
+
+[sub_resource type="Environment" id="Environment_jxasa"]
+background_mode = 3
+glow_enabled = true
+glow_hdr_threshold = 1.75
+
+[node name="Main" type="Node"]
+script = ExtResource("1_nsmpv")
+emoji_scene = ExtResource("2_y6x6o")
+toilet_scene = ExtResource("3_oqb3r")
+explosion = ExtResource("4_npa8b")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_weuim")
+
+[node name="Path" type="Path2D" parent="."]
+curve = SubResource("Curve2D_glp6g")
+
+[node name="SpawnLocation" type="PathFollow2D" parent="Path"]
+position = Vector2(0, 64)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Home" parent="." instance=ExtResource("3_wha44")]
+position = Vector2(360, 640)
+
+[node name="Area2D" type="Area2D" parent="Home"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Home/Area2D"]
+shape = SubResource("RectangleShape2D_x3iqg")
+
+[node name="Heart" type="Sprite2D" parent="."]
+position = Vector2(318, 32)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_6lf71")
+
+[node name="Clock" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("6_uacof")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 528.0
+offset_right = 720.0
+offset_bottom = 64.0
+
+[node name="Life1" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(32, 30)
+texture = ExtResource("8_umojq")
+
+[node name="Life2" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(96, 30)
+texture = ExtResource("8_umojq")
+
+[node name="Life3" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(160, 30)
+texture = ExtResource("8_umojq")
+
+[node name="Points" type="Label" parent="."]
+offset_left = 348.0
+offset_top = 2.0
+offset_right = 430.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 32
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsBest" type="Label" parent="."]
+offset_left = 414.0
+offset_top = 2.0
+offset_right = 494.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 32
+text = "(0)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameTime" type="Label" parent="."]
+offset_left = 79.0
+offset_top = 2.0
+offset_right = 159.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GameTimeBest" type="Label" parent="."]
+offset_left = 171.0
+offset_top = 2.0
+offset_right = 256.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 32
+text = "(0)"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="ToiletFlush" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_uegb0")
+volume_db = -3.431
+pitch_scale = 0.57
+
+[node name="FartSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_acm8h")
+volume_db = -3.002
+
+[node name="BlobSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_jtnpw")
+volume_db = -3.159
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(720, 1216)
+rotation = -0.31765
+
+[node name="Label" type="Label" parent="Node2D"]
+offset_left = -137.056
+offset_top = -31.3771
+offset_right = 66.9435
+offset_bottom = 18.6229
+theme_override_font_sizes/font_size = 34
+text = "V1.0 RC!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(360, 640)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jxasa")
+
+[node name="Menu" parent="." instance=ExtResource("12_tt8pg")]
+position = Vector2(0, -2)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="input_event" from="Home/Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

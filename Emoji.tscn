@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=3 uid="uid://dwykx8nmoxx3r"]
+
+[ext_resource type="Script" path="res://Emoji.gd" id="1_s1cms"]
+[ext_resource type="Texture2D" uid="uid://5duvrenir4e6" path="res://Assets/crazy.png" id="1_vrwim"]
+[ext_resource type="Texture2D" uid="uid://b6dsascnf2rmk" path="res://Assets/cold.png" id="2_c615m"]
+[ext_resource type="Texture2D" uid="uid://vudt4xicus17" path="res://Assets/grin.png" id="3_li53e"]
+[ext_resource type="Texture2D" uid="uid://bfe5jcf5epv20" path="res://Assets/inlove.png" id="5_1n284"]
+[ext_resource type="Texture2D" uid="uid://uowu3dwitcwo" path="res://Assets/poop.png" id="5_56ldi"]
+[ext_resource type="Texture2D" uid="uid://d35ek5ovcfqr0" path="res://Assets/western.png" id="6_kspvh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sgls6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_c615m")
+}],
+"loop": true,
+"name": &"cold",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vrwim")
+}],
+"loop": true,
+"name": &"crazy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_li53e")
+}],
+"loop": true,
+"name": &"grin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_1n284")
+}],
+"loop": true,
+"name": &"inlove",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_56ldi")
+}],
+"loop": true,
+"name": &"poop",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_kspvh")
+}],
+"loop": true,
+"name": &"western",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3pys"]
+radius = 32.0
+height = 64.0
+
+[node name="Emoji" type="RigidBody2D" groups=["emoji"]]
+collision_mask = 0
+mass = 0.01
+gravity_scale = 0.0
+max_contacts_reported = 6
+script = ExtResource("1_s1cms")
+min_speed = 100.0
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sgls6")
+animation = &"cold"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_p3pys")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.01
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
