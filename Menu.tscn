@@ -70,4 +70,14 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_7aqb5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_x8fuf")
 text = "Uusi peli"
 
+[node name="Label2" type="Label" parent="."]
+offset_left = 80.0
+offset_top = 1200.0
+offset_right = 640.0
+offset_bottom = 1248.0
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Pikseli Games – Made in Finland"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
